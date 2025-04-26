@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
+    "lucide-react": "^0.503.0",
     "mdb-react-ui-kit": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -16,7 +17,7 @@
     "react-loader-spinner": "^5.4.5",
     "react-router-dom": "^6.24.1",
     "react-scripts": "5.0.1",
-    "react-toastify": "^10.0.5",
+    "react-toastify": "^10.0.6",
     "toast": "^0.5.4",
     "web-vitals": "^2.1.4"
   },

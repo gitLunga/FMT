@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import '../ADMIN/styles/playerForm.css'; // Import the CSS file
+import { useNavigate } from "react-router-dom";
 
 const initialForm = {
   player_id: '',
@@ -19,8 +20,18 @@ const initialForm = {
 
 const PlayerForm = ({ onSuccess }) => {
   const [form, setForm] = useState(initialForm);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
+  const [toast, setToast] = useState(null);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,43 +39,51 @@ const PlayerForm = ({ onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(false);
+    setToast(null);
+    // setError(null);
+    // setSuccess(false);
 
     if (!form.first_name || !form.last_name) {
-      setError('First name and last name are required');
+      setToast({ type: 'error', message: 'First name and last name are required' });
       return;
     }
 
     try {
       await api.post('/players', form);
       setForm(initialForm);
-      setSuccess(true);
+      setToast({ type: 'success', message: 'Player added successfully!' });
+      navigate('/ViewPlayers'); // Redirect to the ViewPlayers page after successful submission
       onSuccess();
+      navigate('/ViewPlayers'); // Redirect to the ViewPlayers page after successful submission
     } catch (error) {
       console.error('API Error:', error);
-      setError(
-        error.response?.data?.error || 
-        error.response?.data?.message || 
-        'Failed to add player. Please try again.'
-      );
+      setToast({
+        type: 'error',
+        message: error.response?.data?.error ||
+          error.response?.data?.message ||
+          'Failed to add player. Please try again.'
+      });
     }
   };
 
   return (
     <div className="player-form-container">
       <h2 className="form-title">Add New Player</h2>
-      
-      {error && <div className="alert error">{error}</div>}
-      {success && <div className="alert success">Player added successfully!</div>}
+
+      {toast && (
+        <div className={`form-toast ${toast.type}`}>
+          {toast.message}
+        </div>
+      )}
+
 
       <form onSubmit={handleSubmit} className="player-form">
         <div className="form-group">
           <label htmlFor="player_id">Player ID</label>
-          <input 
+          <input
             id="player_id"
-            name="player_id" 
-            value={form.player_id} 
+            name="player_id"
+            value={form.player_id}
             onChange={handleChange}
             placeholder="Enter unique player ID"
           />
@@ -73,22 +92,22 @@ const PlayerForm = ({ onSuccess }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="first_name">First Name*</label>
-            <input 
+            <input
               id="first_name"
-              name="first_name" 
-              value={form.first_name} 
+              name="first_name"
+              value={form.first_name}
               onChange={handleChange}
               placeholder="Player's first name"
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="last_name">Last Name*</label>
-            <input 
+            <input
               id="last_name"
-              name="last_name" 
-              value={form.last_name} 
+              name="last_name"
+              value={form.last_name}
               onChange={handleChange}
               placeholder="Player's last name"
               required
@@ -99,23 +118,23 @@ const PlayerForm = ({ onSuccess }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="date_of_birth">Date of Birth*</label>
-            <input 
+            <input
               id="date_of_birth"
-              type="date" 
-              name="date_of_birth" 
-              value={form.date_of_birth} 
+              type="date"
+              name="date_of_birth"
+              value={form.date_of_birth}
               onChange={handleChange}
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="academy_join_date">Academy Join Date*</label>
-            <input 
+            <input
               id="academy_join_date"
-              type="date" 
-              name="academy_join_date" 
-              value={form.academy_join_date} 
+              type="date"
+              name="academy_join_date"
+              value={form.academy_join_date}
               onChange={handleChange}
               required
             />
@@ -125,10 +144,10 @@ const PlayerForm = ({ onSuccess }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="position">Position*</label>
-            <select 
+            <select
               id="position"
-              name="position" 
-              value={form.position} 
+              name="position"
+              value={form.position}
               onChange={handleChange}
               required
             >
@@ -137,13 +156,13 @@ const PlayerForm = ({ onSuccess }) => {
               <option value="DEFENDER">Defender</option>
             </select>
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="nationality">Nationality*</label>
-            <select 
+            <select
               id="nationality"
-              name="nationality" 
-              value={form.nationality} 
+              name="nationality"
+              value={form.nationality}
               onChange={handleChange}
               required
             >
@@ -157,25 +176,25 @@ const PlayerForm = ({ onSuccess }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="height">Height (cm)</label>
-            <input 
+            <input
               id="height"
-              type="number" 
-              name="height" 
-              value={form.height} 
+              type="number"
+              name="height"
+              value={form.height}
               onChange={handleChange}
               placeholder="Enter height in cm"
               min="100"
               max="250"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="weight">Weight (kg)</label>
-            <input 
+            <input
               id="weight"
-              type="number" 
-              name="weight" 
-              value={form.weight} 
+              type="number"
+              name="weight"
+              value={form.weight}
               onChange={handleChange}
               placeholder="Enter weight in kg"
               min="30"
@@ -187,22 +206,22 @@ const PlayerForm = ({ onSuccess }) => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="contact_email">Email</label>
-            <input 
+            <input
               id="contact_email"
-              type="email" 
-              name="contact_email" 
-              value={form.contact_email} 
+              type="email"
+              name="contact_email"
+              value={form.contact_email}
               onChange={handleChange}
               placeholder="player@example.com"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="contact_phone">Phone</label>
-            <input 
+            <input
               id="contact_phone"
-              name="contact_phone" 
-              value={form.contact_phone} 
+              name="contact_phone"
+              value={form.contact_phone}
               onChange={handleChange}
               placeholder="+27 12 345 6789"
             />
@@ -211,10 +230,10 @@ const PlayerForm = ({ onSuccess }) => {
 
         <div className="form-group">
           <label htmlFor="status">Status*</label>
-          <select 
+          <select
             id="status"
-            name="status" 
-            value={form.status} 
+            name="status"
+            value={form.status}
             onChange={handleChange}
             required
           >
@@ -225,7 +244,7 @@ const PlayerForm = ({ onSuccess }) => {
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="submit-btn">
+          <button type="submit" className="submit-btn"  >
             Add Player
           </button>
         </div>

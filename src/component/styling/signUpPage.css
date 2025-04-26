@@ -1,0 +1,61 @@
+/* Add to your existing auth.css */
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .form-row .form-group {
+    flex: 1;
+  }
+  
+  .form-terms {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  
+  .form-terms input {
+    margin: 0;
+  }
+  
+  .form-terms a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .form-terms a:hover {
+    text-decoration: underline;
+  }
+  
+  .password-strength {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+  }
+  
+  .password-strength.weak {
+    color: #e74c3c;
+  }
+  
+  .password-strength.medium {
+    color: #f39c12;
+  }
+  
+  .password-strength.strong {
+    color: #2ecc71;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .form-row {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .auth-card {
+      padding: 1.5rem;
+    }
+  }

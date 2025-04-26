@@ -1,0 +1,75 @@
+/* ================ BASE STYLES ================ */
+:root {
+    --primary: #3498db;
+    --primary-dark: #2980b9;
+    --secondary: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+    --gray: #95a5a6;
+    --sidebar-width: 250px;
+    --sidebar-collapsed-width: 80px;
+    --action-item-color: #90caf9;
+    --logout-item-color: #f48fb1;
+  }
+  
+  /* ================ LAYOUT STRUCTURE ================ */
+  .dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+  }
+  
+  .sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--dark);
+    color: white;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+  }
+  
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+  }
+  
+  /* Collapsed state */
+  .sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+  }
+  
+  .sidebar.collapsed + .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+  }
+  
+  /* Rest of your existing CSS remains the same */
+  /* ... [keep all your other CSS rules] ... */
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    
+    .main-content {
+      margin-left: 0;
+    }
+    
+    .sidebar.collapsed + .main-content,
+    .sidebar:not(.collapsed) + .main-content {
+      margin-left: 0;
+    }
+  }

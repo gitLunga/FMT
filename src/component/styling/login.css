@@ -1,0 +1,134 @@
+/* Auth Pages Styles */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    padding: 2rem;
+  }
+  
+  .auth-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .auth-header h2 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .auth-header p {
+    color: #7f8c8d;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  
+  .form-group input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-group input.error {
+    border-color: #e74c3c;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+  }
+  
+  .password-input {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #7f8c8d;
+  }
+  
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .forgot-password {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+  .auth-button {
+    background-color: #3498db;
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .auth-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #7f8c8d;
+  }
+  
+  .auth-footer a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }
