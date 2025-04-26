@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import api from '../api';
-import '../styles/playerForm.css'; // Import the CSS file
+import api from '../../api';
+import '../ADMIN/styles/playerForm.css'; // Import the CSS file
 
 const initialForm = {
   player_id: '',

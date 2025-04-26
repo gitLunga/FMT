@@ -2,10 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Register from './screens/Register';
 import Login from './screens/Login';
-import PlayerForm from './component/PlayerForm';
 
-import AdminDashboard from './component/AdminDashboard';
+import PlayerForm from './component/ADMIN/PlayerForm';
 
+import AdminDashboard from './component/ADMIN/AdminDashboard';
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
