@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import '../component/styling/signUpPage.css';
 
@@ -15,6 +15,7 @@ const SignUpPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,8 +44,6 @@ const SignUpPage = () => {
     
     if (!formData.password) {
       newErrors.password = 'Password is required';
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
     }
     
     if (formData.password !== formData.confirmPassword) {
@@ -54,19 +53,41 @@ const SignUpPage = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     setErrors(validationErrors);
     
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
-      // Simulate API call
-      setTimeout(() => {
-        console.log('Registration data:', formData);
+      
+      try {
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password // Sending plain text password
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (!response.ok) {
+          throw new Error(data.error || 'Registration failed');
+        }
+  
+        // Redirect to login after successful registration
+        navigate('/login');
+      } catch (error) {
+        setErrors({ form: error.message });
+      } finally {
         setIsSubmitting(false);
-        // Redirect to login or dashboard after successful registration
-      }, 1500);
+      }
     }
   };
 
@@ -77,6 +98,8 @@ const SignUpPage = () => {
           <h2>Create Your Account</h2>
           <p>Join our football academy management system</p>
         </div>
+
+        {errors.form && <div className="error-message">{errors.form}</div>}
 
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-row">

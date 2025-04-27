@@ -21,7 +21,7 @@ const PlayerPerformanceForm = ({ onSuccess }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get('/players')
+    api.get('/api/players')
       .then(response => setPlayers(response.data))
       .catch(error => console.error('Error fetching players:', error));
 

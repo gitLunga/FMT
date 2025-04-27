@@ -34,7 +34,7 @@ const PlayerList = () => {
   const handleDeletePlayer = async (playerId) => {
     if (window.confirm('Are you sure you want to delete this player?')) {
       try {
-        await api.delete(`/players/${playerId}`);
+        await api.delete(`/api/players/${playerId}`);
         setPlayers(players.filter(player => player.player_id !== playerId));
         alert('Player deleted successfully');
       } catch (err) {
@@ -46,7 +46,7 @@ const PlayerList = () => {
 
   const handleSaveEdit = async () => {
     try {
-      await api.put(`/players/${editPlayerData.player_id}`, editPlayerData);
+      await api.put(`/api/players/${editPlayerData.player_id}`, editPlayerData);
       setPlayers(prevPlayers =>
         prevPlayers.map(p =>
           p.player_id === editPlayerData.player_id ? editPlayerData : p
@@ -104,7 +104,7 @@ const PlayerList = () => {
 
   const fetchPlayers = async () => {
     try {
-      const response = await api.get('/players');
+      const response = await api.get('/api/players');
       setPlayers(response.data);
       setLoading(false);
     } catch (err) {
