@@ -139,9 +139,11 @@ const PlayerForm = ({ onSuccess }) => {
               onChange={handleChange}
               required
             >
-              <option value="MIDFIELDER">Midfielder</option>
               <option value="GOALKEEPER">Goalkeeper</option>
               <option value="DEFENDER">Defender</option>
+              <option value="MIDFIELDER">Midfielder</option>
+              <option value="FORWARD">Forward</option>
+
             </select>
           </div>
 
@@ -156,6 +158,20 @@ const PlayerForm = ({ onSuccess }) => {
             >
               <option value="South Africa">South Africa</option>
               <option value="Nigeria">Nigeria</option>
+              <option value="South Africa">Zimbabwe</option>
+              <option value="Nigeria">Lesotho</option>
+              <option value="Nigeria">Botswana</option>
+              <option value="Nigeria">Namibia</option>
+              <option value="Nigeria">Swaziland</option>
+              <option value="Nigeria">Mozambique</option>
+              <option value="Nigeria">Angola</option>
+              <option value="Nigeria">Tanzania</option>
+              <option value="Nigeria">Kenya</option>
+              <option value="Nigeria">Uganda</option>
+              <option value="Nigeria">Zambia</option>
+              <option value="Nigeria">Malawi</option>
+              <option value="Nigeria">Rwanda</option>
+              <option value="Nigeria">Burundi</option>
               <option value="Other">Other</option>
             </select>
           </div>
