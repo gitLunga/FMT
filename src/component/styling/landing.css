@@ -44,7 +44,7 @@
   }
   
   .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), url('https://images.unsplash.com/photo-1574629810360-7efbbe195018') no-repeat center center/cover);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), url('../assets/images/background.webp') );
     height: 80vh;
     display: flex;
     align-items: center;
@@ -168,4 +168,64 @@
   .footer-links a {
     color: white;
     text-decoration: none;
+  }
+
+  /* Navigation Link Styles */
+.nav-link {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
+    transition: color 0.3s;
+  }
+  
+  .nav-link:hover {
+    color: #3498db;
+  }
+  
+  .footer-link {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: inherit;
+    padding: 0;
+    text-decoration: none;
+  }
+  
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Button Styles */
+  button {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .cta-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+  
+  .cta-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .nav-links {
+      gap: 1rem;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+    }
   }

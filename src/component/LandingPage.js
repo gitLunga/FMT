@@ -1,30 +1,62 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../component/styling/landing.css'; // Adjust the path as necessary
+import '../component/styling/landing.css';
 
 const LandingPage = () => {
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="landing-container">
       {/* Navigation */}
       <nav className="navbar">
         <div className="logo">⚽ Football Academy</div>
         <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/contact">Contact</Link>
+          <button 
+            className="nav-link" 
+            onClick={() => scrollToSection('home')}
+          >
+            Home
+          </button>
+          <button 
+            className="nav-link" 
+            onClick={() => scrollToSection('about')}
+          >
+            About
+          </button>
+          <button 
+            className="nav-link" 
+            onClick={() => scrollToSection('services')}
+          >
+            Services
+          </button>
+          <button 
+            className="nav-link" 
+            onClick={() => scrollToSection('contact')}
+          >
+            Contact
+          </button>
           <Link to="/login" className="login-btn">Login</Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="hero">
+      <section id="home" className="hero">
         <div className="hero-content">
           <h1>Elite Football Academy Management</h1>
           <p>Streamline your academy operations with our comprehensive management system</p>
           <div className="cta-buttons">
             <Link to="/register" className="cta-primary">Get Started</Link>
-            <Link to="/demo" className="cta-secondary">Request Demo</Link>
+            <button 
+              className="cta-secondary"
+              onClick={() => scrollToSection('contact')}
+            >
+              Request Demo
+            </button>
           </div>
         </div>
       </section>
@@ -91,9 +123,24 @@ const LandingPage = () => {
         <div className="footer-content">
           <div className="footer-logo">⚽ Football Academy</div>
           <div className="footer-links">
-            <Link to="/privacy">Privacy Policy</Link>
-            <Link to="/terms">Terms of Service</Link>
-            <Link to="/faq">FAQ</Link>
+            <button 
+              className="footer-link"
+              onClick={() => scrollToSection('about')}
+            >
+              About
+            </button>
+            <button 
+              className="footer-link"
+              onClick={() => scrollToSection('services')}
+            >
+              Services
+            </button>
+            <button 
+              className="footer-link"
+              onClick={() => scrollToSection('contact')}
+            >
+              Contact
+            </button>
           </div>
           <div className="social-icons">
             {/* Add social media icons here */}

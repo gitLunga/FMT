@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import '../ADMIN/styles/playerForm.css'; // Import the CSS file
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const initialForm = {
-  player_id: '',
   first_name: '',
   last_name: '',
   date_of_birth: '',
@@ -22,7 +21,7 @@ const PlayerForm = ({ onSuccess }) => {
   const [form, setForm] = useState(initialForm);
   // const [success, setSuccess] = useState(false);
   const [toast, setToast] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -40,21 +39,20 @@ const PlayerForm = ({ onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setToast(null);
-    // setError(null);
-    // setSuccess(false);
-
+  
     if (!form.first_name || !form.last_name) {
       setToast({ type: 'error', message: 'First name and last name are required' });
       return;
     }
-
+  
     try {
-      await api.post('/players', form);
+      const response = await api.post('/players', form);
       setForm(initialForm);
-      setToast({ type: 'success', message: 'Player added successfully!' });
-      navigate('/ViewPlayers'); // Redirect to the ViewPlayers page after successful submission
-      onSuccess();
-      navigate('/ViewPlayers'); // Redirect to the ViewPlayers page after successful submission
+      setToast({ 
+        type: 'success', 
+        message: `Player added successfully! ID: ${response.data.player_id}`
+      });
+      
     } catch (error) {
       console.error('API Error:', error);
       setToast({
@@ -78,16 +76,6 @@ const PlayerForm = ({ onSuccess }) => {
 
 
       <form onSubmit={handleSubmit} className="player-form">
-        <div className="form-group">
-          <label htmlFor="player_id">Player ID</label>
-          <input
-            id="player_id"
-            name="player_id"
-            value={form.player_id}
-            onChange={handleChange}
-            placeholder="Enter unique player ID"
-          />
-        </div>
 
         <div className="form-row">
           <div className="form-group">

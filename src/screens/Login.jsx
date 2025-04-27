@@ -36,7 +36,7 @@ function Login() {
             <input type="email" onChange={(event) => setEmail(event.target.value)} className="control-form" />
         </div>
         <div className="form-group">
-            <label>First name</label>
+            <label>Password</label>
             <input type="password" onChange={(event) => setPassword(event.target.value)} className="control-form" />
         </div>
         <div className="form-group">
