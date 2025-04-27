@@ -12,37 +12,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="logo">⚽ Football Academy</div>
-        <div className="nav-links">
-          <button 
-            className="nav-link" 
-            onClick={() => scrollToSection('home')}
-          >
-            Home
-          </button>
-          <button 
-            className="nav-link" 
-            onClick={() => scrollToSection('about')}
-          >
-            About
-          </button>
-          <button 
-            className="nav-link" 
-            onClick={() => scrollToSection('services')}
-          >
-            Services
-          </button>
-          <button 
-            className="nav-link" 
-            onClick={() => scrollToSection('contact')}
-          >
-            Contact
-          </button>
-          <Link to="/login" className="login-btn">Login</Link>
-        </div>
-      </nav>
+     
 
       {/* Hero Section */}
       <section id="home" className="hero">
@@ -118,38 +88,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-logo">⚽ Football Academy</div>
-          <div className="footer-links">
-            <button 
-              className="footer-link"
-              onClick={() => scrollToSection('about')}
-            >
-              About
-            </button>
-            <button 
-              className="footer-link"
-              onClick={() => scrollToSection('services')}
-            >
-              Services
-            </button>
-            <button 
-              className="footer-link"
-              onClick={() => scrollToSection('contact')}
-            >
-              Contact
-            </button>
-          </div>
-          <div className="social-icons">
-            {/* Add social media icons here */}
-          </div>
-        </div>
-        <div className="copyright">
-          © {new Date().getFullYear()} Football Academy Management System
-        </div>
-      </footer>
+      
     </div>
   );
 };

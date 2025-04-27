@@ -1,0 +1,110 @@
+.reports-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .reports-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .generate-btn {
+    background-color: #2ecc71;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .generate-btn:hover {
+    background-color: #27ae60;
+  }
+  
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .report-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .report-icon {
+    background-color: #f5f7fa;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .report-content {
+    flex-grow: 1;
+  }
+  
+  .report-content h3 {
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .report-type {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .report-date {
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  
+  .report-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .view-btn, .download-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .view-btn {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .download-btn {
+    background-color: #f5f7fa;
+    color: #333;
+  }
+  
+  .view-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .download-btn:hover {
+    background-color: #e0e0e0;
+  }

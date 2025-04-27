@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Login from './screens/Login';
+import Layout from './component/Layout';
 
 import LandingPage from './component/LandingPage';
 import LoginF from './component/Login';
 import SignUpPage from './component/SignUpPage';
 
-
+// ADMIN COMPONENTS
 import PlayerForm from './component/ADMIN/PlayerForm';
 import AdminDashboard from './component/ADMIN/AdminDashboard';
 import ViewPlayers from './component/ADMIN/ViewPlayers';
+
+import PlayerContractForm from './component/ADMIN/playerContractForm';
+import PlayerPerformanceForm from './component/ADMIN/playerPerformanceForm';
+
+// import SettingsPage from './component/SettingsPage';
+
+
+
+
+
 
 
 import './App.css';
@@ -21,32 +31,40 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route exact path='/login' element={<Login />} />
+      <Layout>
+        <Routes>
 
-        <Route exact path='/' element={<LandingPage />} />
-        <Route exact path='/login' element={<LoginF />} />
+          <Route exact path='/' element={<LandingPage />} />
+          <Route exact path='/login' element={<LoginF />} />
 
-        <Route exact path='/playerform' element={<PlayerForm />} />
+          {/* //ADMIN ROUTES */}
 
-        <Route path="/register" element={<SignUpPage />} />
+          <Route exact path='/playerform' element={<PlayerForm />} />
+          <Route path="/register" element={<SignUpPage />} />
+          <Route
+            path="/AdminDashboard"
+            element={
+              <AdminDashboard
+                collapsed={sidebarCollapsed}
+                setCollapsed={setSidebarCollapsed}
+              />
+            }
+          />
+          <Route exact path='/ViewPlayers' element={<ViewPlayers />} />
 
-        <Route
-          path="/AdminDashboard"
-          element={
-            <AdminDashboard
-              collapsed={sidebarCollapsed}
-              setCollapsed={setSidebarCollapsed}
-            />
-          }
-        />
-        <Route exact path='/ViewPlayers' element={<ViewPlayers />} />
+          <Route exact path='/PlayerContractForm' element={<PlayerContractForm />} />
+          <Route exact path='/PlayerPerformanceForm' element={<PlayerPerformanceForm />} />
 
-        {/* Add more routes as needed */}
+          {/* <Route exact path='/SettingsPage' element={<SettingsPage />} /> */}
 
 
 
-      </Routes>
+          {/* Add more routes as needed */}
+
+
+
+        </Routes>
+      </Layout>
     </Router>
   );
 }
