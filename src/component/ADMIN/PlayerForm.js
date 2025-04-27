@@ -39,20 +39,20 @@ const PlayerForm = ({ onSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setToast(null);
-  
+
     if (!form.first_name || !form.last_name) {
       setToast({ type: 'error', message: 'First name and last name are required' });
       return;
     }
-  
+
     try {
       const response = await api.post('/players', form);
       setForm(initialForm);
-      setToast({ 
-        type: 'success', 
+      setToast({
+        type: 'success',
         message: `Player added successfully! ID: ${response.data.player_id}`
       });
-      
+
     } catch (error) {
       console.error('API Error:', error);
       setToast({
@@ -187,7 +187,7 @@ const PlayerForm = ({ onSuccess }) => {
               value={form.height}
               onChange={handleChange}
               placeholder="Enter height in cm"
-              min="100"
+              min="70"
               max="250"
             />
           </div>
