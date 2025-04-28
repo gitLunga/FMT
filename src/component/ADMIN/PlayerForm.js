@@ -46,7 +46,8 @@ const PlayerForm = ({ onSuccess }) => {
     }
 
     try {
-      const response = await api.post('/players', form);
+      const response = await api.post('/api/players', form);
+      console.log('API Response:', response.data); //
       setForm(initialForm);
       setToast({
         type: 'success',
@@ -54,7 +55,7 @@ const PlayerForm = ({ onSuccess }) => {
       });
 
     } catch (error) {
-      console.error('API Error:', error);
+      console.error('Full error object:', error); 
       setToast({
         type: 'error',
         message: error.response?.data?.error ||

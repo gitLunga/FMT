@@ -42,7 +42,8 @@ const LoginPage = () => {
       localStorage.setItem('user', JSON.stringify(data.user));
       
       // Redirect to dashboard
-      navigate('/dashboard');
+      // do not forget to add different navigation for different roles *****
+      navigate('/AdminDashboard');
     } catch (error) {
       setErrors({ form: error.message });
     }

@@ -31,8 +31,7 @@ import {
         <div className="sidebar-header">
           {!collapsed ? (
             <div className="brand">
-              <div className="logo">⚽</div>
-              <span>Football Academy</span>
+             
             </div>
           ) : (
             <div className="logo-collapsed">⚽</div>

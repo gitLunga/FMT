@@ -133,7 +133,7 @@
 }
 
 .form-toast.error {
-  background-color: #F44336;
+  background-color: #c2170a;
 }
 
 @keyframes slideIn {

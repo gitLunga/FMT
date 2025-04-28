@@ -15,6 +15,9 @@ import ViewPlayers from './component/ADMIN/ViewPlayers';
 import PlayerContractForm from './component/ADMIN/playerContractForm';
 import PlayerPerformanceForm from './component/ADMIN/playerPerformanceForm';
 
+import ViewContracts from './component/ADMIN/ViewContract';
+import ViewPerformances from './component/ADMIN/ViewPerformances';
+
 // import SettingsPage from './component/SettingsPage';
 
 
@@ -54,6 +57,12 @@ function App() {
 
           <Route exact path='/PlayerContractForm' element={<PlayerContractForm />} />
           <Route exact path='/PlayerPerformanceForm' element={<PlayerPerformanceForm />} />
+
+          <Route exact path='/ViewContracts' element={<ViewContracts />} />
+          <Route exact path='/ViewPerformances' element={<ViewPerformances />} />
+
+
+
 
           {/* <Route exact path='/SettingsPage' element={<SettingsPage />} /> */}
 

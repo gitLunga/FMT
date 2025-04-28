@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Bell, MessageSquare } from "lucide-react";
+
 import PlayerList from "../ADMIN/ViewPlayers";
 import AdminSideBar from "./AdminSidebar"; // Import the Sidebar component
 import "../ADMIN/styles/adminSideBar.css";
@@ -11,8 +11,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       {/* Include the Sidebar component */}
-      <AdminSideBar 
-        collapsed={collapsed} 
+      <AdminSideBar
+        collapsed={collapsed}
         setCollapsed={setCollapsed}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -21,24 +21,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="main-content">
         <header className="header">
-          <div className="search-bar">
-            <Search className="search-icon" />
-            <input type="text" placeholder="Search..." />
-          </div>
-          
           <div className="header-actions">
-            <button className="notification-btn">
-              <Bell size={20} />
-              <span className="badge">3</span>
-            </button>
-            <button className="message-btn">
-              <MessageSquare size={20} />
-              <span className="badge">7</span>
-            </button>
-            <div className="user-profile">
-              <div className="avatar">VL</div>
-              {!collapsed && <span>Valerie Luna</span>}
-            </div>
           </div>
         </header>
 

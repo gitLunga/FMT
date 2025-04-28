@@ -45,11 +45,11 @@ const PlayerContractForm = ({ onSuccess }) => {
         }
 
         try {
-            await api.post('/contracts', form);
+            await api.post('/api/players/add-contract', form);
             setForm(initialForm);
             setToast({ type: 'success', message: 'Contract added successfully!' });
             navigate('/ViewContracts');
-            onSuccess();
+           
         } catch (error) {
             console.error('API Error:', error);
             setToast({

@@ -45,11 +45,11 @@ const PlayerPerformanceForm = ({ onSuccess }) => {
     }
   
     try {
-      await api.post('/player-performances', form); // Changed endpoint to match backend
+      await api.post('/api/players/add-performance', form); // Changed endpoint to match backend
       setForm(initialForm);
       setToast({ type: 'success', message: 'Performance added successfully!' });
       navigate('/ViewPerformances');
-      onSuccess();
+     
     } catch (error) {
       console.error('API Error:', error);
       setToast({
