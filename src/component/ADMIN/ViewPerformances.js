@@ -10,7 +10,7 @@ const ViewPerformances = () => {
     useEffect(() => {
         const fetchPerformances = async () => {
             try {
-                const response = await api.get('/api/players/performances');
+                const response = await api.get('/players/performances');
                 setPerformances(response.data);
                 setLoading(false);
             } catch (err) {

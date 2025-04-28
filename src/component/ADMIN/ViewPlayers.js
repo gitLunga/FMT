@@ -34,7 +34,7 @@ const PlayerList = () => {
   const handleDeletePlayer = async (playerId) => {
     if (window.confirm('Are you sure you want to delete this player?')) {
       try {
-        await api.delete(`/api/players/${playerId}`);
+        await api.delete(`/players/${playerId}`);
         setPlayers(players.filter(player => player.player_id !== playerId));
         alert('Player deleted successfully');
       } catch (err) {
@@ -46,7 +46,7 @@ const PlayerList = () => {
 
   const handleSaveEdit = async () => {
     try {
-      await api.put(`/api/players/${editPlayerData.player_id}`, editPlayerData);
+      await api.put(`/players/${editPlayerData.player_id}`, editPlayerData);
       setPlayers(prevPlayers =>
         prevPlayers.map(p =>
           p.player_id === editPlayerData.player_id ? editPlayerData : p
@@ -104,7 +104,7 @@ const PlayerList = () => {
 
   const fetchPlayers = async () => {
     try {
-      const response = await api.get('/api/players');
+      const response = await api.get('/players');
       setPlayers(response.data);
       setLoading(false);
     } catch (err) {
@@ -202,9 +202,7 @@ const PlayerList = () => {
         <table className="players-table">
           <thead>
             <tr>
-              <th onClick={() => handleSort('player_id')}>
-                ID {getSortIndicator('player_id')}
-              </th>
+              
               <th onClick={() => handleSort('last_name')}>
                 Name {getSortIndicator('last_name')}
               </th>
@@ -229,7 +227,6 @@ const PlayerList = () => {
             {filteredPlayers.length > 0 ? (
               filteredPlayers.map(player => (
                 <tr key={player.player_id}>
-                  <td>{player.player_id}</td>
                   <td>{player.first_name} {player.last_name}</td>
                   <td>{player.position}</td>
                   <td>{player.nationality}</td>

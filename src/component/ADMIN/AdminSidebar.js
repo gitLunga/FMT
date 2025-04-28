@@ -10,6 +10,7 @@ import {
     LogOut
   } from "lucide-react";
   import { useNavigate } from "react-router-dom";
+  import   "./styles/adminSideBar.css"; // Import the Sidebar component
   
   const Sidebar = ({ collapsed, setCollapsed, activeTab, setActiveTab }) => {
     const navigate = useNavigate();

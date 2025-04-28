@@ -21,7 +21,7 @@ const PlayerContractForm = ({ onSuccess }) => {
 
     useEffect(() => {
         // Fetch players for dropdown
-        api.get('/api/players')
+        api.get('/players')
             .then(response => setPlayers(response.data))
             .catch(error => console.error('Error fetching players:', error));
 
@@ -45,7 +45,7 @@ const PlayerContractForm = ({ onSuccess }) => {
         }
 
         try {
-            await api.post('/api/players/add-contract', form);
+            await api.post('/players/add-contract', form);
             setForm(initialForm);
             setToast({ type: 'success', message: 'Contract added successfully!' });
             navigate('/ViewContracts');

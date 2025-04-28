@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../api';
 import '../ADMIN/styles/playerForm.css'; // Import the CSS file
 // import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const initialForm = {
   first_name: '',
@@ -21,7 +22,7 @@ const PlayerForm = ({ onSuccess }) => {
   const [form, setForm] = useState(initialForm);
   // const [success, setSuccess] = useState(false);
   const [toast, setToast] = useState(null);
-  // const navigate = useNavigate();
+   const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const PlayerForm = ({ onSuccess }) => {
     }
 
     try {
-      const response = await api.post('/api/players', form);
+      const response = await api.post('/players', form);
       console.log('API Response:', response.data); //
       setForm(initialForm);
       setToast({
@@ -55,7 +56,7 @@ const PlayerForm = ({ onSuccess }) => {
       });
 
     } catch (error) {
-      console.error('Full error object:', error); 
+      console.error('Full error object:', error);
       setToast({
         type: 'error',
         message: error.response?.data?.error ||
@@ -67,7 +68,15 @@ const PlayerForm = ({ onSuccess }) => {
 
   return (
     <div className="player-form-container">
-      <h2 className="form-title">Add New Player</h2>
+      <div className="form-header">
+        <button
+          className="back-button"
+          onClick={() => navigate(-1)} // Go back to previous page
+        >
+          &larr; Back
+        </button>
+        <h2 className="form-title">Add New Player</h2>
+      </div>
 
       {toast && (
         <div className={`form-toast ${toast.type}`}>

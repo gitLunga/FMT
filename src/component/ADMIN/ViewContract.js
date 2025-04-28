@@ -10,7 +10,7 @@ const ViewContracts = () => {
   useEffect(() => {
     const fetchContracts = async () => {
       try {
-        const response = await api.get("/api/players/contracts");
+        const response = await api.get("/players/contracts");
         console.log("API Response:", response.data); // Debug log
         setContracts(response.data || []); // Ensure it's an array
         setLoading(false);

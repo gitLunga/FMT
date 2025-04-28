@@ -28,13 +28,48 @@
     background-color: #f5f7fa;
   }
   
-  .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: margin-left 0.3s ease;
+ /* Update the main-content styles */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: var(--sidebar-width); /* Add this */
+  width: calc(100% - var(--sidebar-width)); /* Add this */
+  transition: margin-left 0.3s ease, width 0.3s ease; /* Add width transition */
+}
+
+/* Update the collapsed state */
+.sidebar.collapsed + .main-content {
+  margin-left: var(--sidebar-collapsed-width);
+  width: calc(100% - var(--sidebar-collapsed-width));
+}
+
+/* Ensure content-area takes full width */
+.content-area {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: #f5f7fa;
+  width: 100%; /* Add this */
+}
+
+/* Update responsive styles */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    position: fixed;
   }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
   
   /* ================ SIDEBAR STYLES ================ */
   .sidebar {
@@ -49,8 +84,9 @@
     z-index: 100;
   }
   
-  .sidebar.collapsed {
-    width: var(--sidebar-collapsed-width);
+  .sidebar.collapsed + .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+    width: calc(100% - var(--sidebar-collapsed-width));
   }
   
   .sidebar-header {
@@ -365,3 +401,65 @@
       width: calc(100% - var(--sidebar-collapsed-width));
     }
   }
+
+  /* Add these styles to fix the layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  display: flex;
+  width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* Default sidebar width */
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.collapsed + .main-content {
+  margin-left: 80px; /* Collapsed sidebar width */
+}
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* For forms like PlayerContractForm */
+.player-form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .sidebar.collapsed + .main-content,
+  .sidebar:not(.collapsed) + .main-content {
+    margin-left: 0;
+  }
+}
