@@ -9,6 +9,7 @@ const Layout = ({ children }) => {
     }
   };
 
+
   return (
     <div className="app-container">
       {/* Header */}
@@ -16,7 +17,7 @@ const Layout = ({ children }) => {
         <div className="header-content">
           <button 
             className="logo-btn" 
-            onClick={() => scrollToSection('home')}
+            onClick={() => window.location.reload()} 
           >
             ⚽ Football Academy
           </button>

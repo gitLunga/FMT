@@ -21,8 +21,8 @@ import {
       const tabMap = {
         '/dashboard': 'dashboard',
         '/players': 'players',
-        '/reports': 'reports',
-        '/settings': 'settings'
+        '/ReportPage': 'reports',
+        '/SettingsPage': 'settings'
       };
       setActiveTab(tabMap[path] || activeTab);
     };
@@ -59,7 +59,7 @@ import {
           
           <button 
             className={`nav-item ${activeTab === "reports" ? "active" : ""}`}
-            onClick={() => handleNavigation("/reports")}
+            onClick={() => handleNavigation("/ReportPage")}
           >
             <ClipboardList size={20} />
             {!collapsed && <span>Reports</span>}
@@ -67,7 +67,7 @@ import {
           
           <button 
             className={`nav-item ${activeTab === "settings" ? "active" : ""}`}
-            onClick={() => handleNavigation("/settings")}
+            onClick={() => handleNavigation("/SettingsPage")}
           >
             <Settings size={20} />
             {!collapsed && <span>Settings</span>}

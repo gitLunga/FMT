@@ -4,6 +4,9 @@ import PlayerList from "../ADMIN/ViewPlayers";
 import AdminSideBar from "./AdminSidebar"; // Import the Sidebar component
 import "../ADMIN/styles/adminSideBar.css";
 
+import ReportPage from "./ReportPage";
+import SettingsPage from "../SettingsPage";
+
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState("players");
@@ -28,8 +31,8 @@ const Dashboard = () => {
         <div className="content-area">
           {activeTab === "players" && <PlayerList />}
           {activeTab === "dashboard" && <DashboardHome />}
-          {activeTab === "reports" && <ReportsView />}
-          {activeTab === "settings" && <SettingsView />}
+          {activeTab === "ReportPage" && <ReportPage />}
+          {activeTab === "SettingsPage" && <SettingsPage />}
         </div>
       </div>
     </div>
@@ -44,18 +47,6 @@ const DashboardHome = () => (
   </div>
 );
 
-const ReportsView = () => (
-  <div className="reports-view">
-    <h2>Reports</h2>
-    <p>Player performance and academy statistics</p>
-  </div>
-);
 
-const SettingsView = () => (
-  <div className="settings-view">
-    <h2>Settings</h2>
-    <p>Configure your academy settings</p>
-  </div>
-);
 
 export default Dashboard;

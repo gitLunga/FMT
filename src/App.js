@@ -18,6 +18,11 @@ import PlayerPerformanceForm from './component/ADMIN/playerPerformanceForm';
 import ViewContracts from './component/ADMIN/ViewContract';
 import ViewPerformances from './component/ADMIN/ViewPerformances';
 
+import ReportPage from './component/ADMIN/ReportPage';
+
+import SettingsPage from './component/SettingsPage';
+
+
 // import SettingsPage from './component/SettingsPage';
 
 
@@ -60,6 +65,12 @@ function App() {
 
           <Route exact path='/ViewContracts' element={<ViewContracts />} />
           <Route exact path='/ViewPerformances' element={<ViewPerformances />} />
+
+          <Route exact path='/ReportPage' element={<ReportPage />} />
+
+            {/* other pages  */}
+          <Route exact path='/SettingsPage' element={<SettingsPage />} />
+
 
 
 
