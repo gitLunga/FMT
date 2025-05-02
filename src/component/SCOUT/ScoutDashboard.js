@@ -32,11 +32,11 @@ const ScoutDashboard = () => {
                 setPlayers(allPlayers.data);
         
                 // Fetch scouted players - updated endpoint
-                const scoutedResponse = await api.get(`/scout/scoutedplayers/${user.user_id}`);
+                const scoutedResponse = await api.get(`/scout/scoutedplayers/${user.id}`);
                 setScoutedPlayers(scoutedResponse.data);
         
                 // Fetch notifications
-                const notificationsResponse = await api.get(`/scout/notifications/${user.user_id}`);
+                const notificationsResponse = await api.get(`/scout/notifications/${user.id}`);
                 setNotifications(notificationsResponse.data);
         
                 setLoading(false);
