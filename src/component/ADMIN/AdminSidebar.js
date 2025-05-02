@@ -43,7 +43,7 @@ import {
           {/* Main Navigation Items */}
           <button 
             className={`nav-item ${activeTab === "dashboard" ? "active" : ""}`}
-            onClick={() => handleNavigation("/dashboard")}
+            onClick={() => handleNavigation("/AdministratorDash")}
           >
             <Home size={20} />
             {!collapsed && <span>Dashboard</span>}

@@ -18,6 +18,8 @@ import PlayerPerformanceForm from './component/ADMIN/playerPerformanceForm';
 import ViewContracts from './component/ADMIN/ViewContract';
 import ViewPerformances from './component/ADMIN/ViewPerformances';
 
+import AdministratorDash from './component/ADMIN/AdministratorDash'
+
 import ReportPage from './component/ADMIN/ReportPage';
 
 import SettingsPage from './component/SettingsPage';
@@ -70,6 +72,8 @@ function App() {
 
           <Route exact path='/ViewContracts' element={<ViewContracts />} />
           <Route exact path='/ViewPerformances' element={<ViewPerformances />} />
+
+          <Route exact path='/AdministratorDash' element={<AdministratorDash />} />
 
           <Route exact path='/ReportPage' element={<ReportPage />} />
 
