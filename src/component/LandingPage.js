@@ -12,8 +12,6 @@ const LandingPage = () => {
 
   return (
     <div className="landing-container">
-     
-
       {/* Hero Section */}
       <section id="home" className="hero">
         <div className="hero-content">
