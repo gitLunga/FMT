@@ -8,8 +8,16 @@ import { Bar } from 'react-chartjs-2';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AdminDashboard = () => {
-  // ... your existing state declarations ...
-
+  // Define all state variables properly
+  const [stats, setStats] = useState({
+    totalPlayers: 0,
+    totalUsers: 0,
+    scoutedPlayers: 0,
+    playersWithContracts: 0,
+    activeScouts: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState([]);
   const [scoutingData, setScoutingData] = useState(null);
   const [playerData, setPlayerData] = useState(null);
 
@@ -18,19 +26,19 @@ const AdminDashboard = () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         
-        // Fetch all stats - using your existing endpoint
+        // Fetch all stats
         const statsResponse = await api.get('/scout/admin/stats');
         setStats(statsResponse.data);
         
-        // Fetch notifications - using your existing endpoint
-        const notificationsResponse = await api.get(`/notifications/user/${user.user_id}`);
+        // Fetch notifications
+        const notificationsResponse = await api.get(`/scout/notifications/user/${user.user_id}`);
         setNotifications(notificationsResponse.data);
         
-        // Fetch data for charts (add these endpoints to your backend)
-        const scoutingResponse = await api.get('/scout/admin/scouting-data');
+        // Fetch data for charts - updated endpoints to match backend
+        const scoutingResponse = await api.get('/scout/scouting-data');
         setScoutingData(scoutingResponse.data);
         
-        const playersResponse = await api.get('/scout/admin/players-data');
+        const playersResponse = await api.get('/scout/player-data');
         setPlayerData(playersResponse.data);
         
         setLoading(false);
@@ -43,9 +51,20 @@ const AdminDashboard = () => {
     fetchData();
   }, []);
 
-  // ... rest of your existing functions ...
+  const handleNotificationAction = async (notificationId, action) => {
+    try {
+      // const response = await api.put(`/notifications/${notificationId}`, { action });
+      
+      // Refresh notifications
+      const updatedResponse = await api.get('/scout/admin/notifications');
+      setNotifications(updatedResponse.data);
+    } catch (error) {
+      console.error('Error updating notification:', error);
+      alert('Failed to update notification');
+    }
+  };
 
-  // Chart configuration (added to your component)
+  // Chart configuration
   const scoutingChartOptions = {
     responsive: true,
     plugins: {
@@ -84,7 +103,6 @@ const AdminDashboard = () => {
         <div className="stats-section">
           <h2>System Overview</h2>
           <div className="stats-grid">
-            {/* Your existing stat cards */}
             {Object.entries(stats).map(([key, value]) => (
               <div key={key} className="stat-card">
                 <h3>{key.split(/(?=[A-Z])/).join(' ')}</h3>
@@ -93,7 +111,7 @@ const AdminDashboard = () => {
             ))}
           </div>
           
-          {/* Integrated Charts - Added below stats */}
+          {/* Integrated Charts */}
           <div className="chart-row">
             {scoutingData && (
               <div className="chart-container">
@@ -129,9 +147,41 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Your existing notifications section */}
         <div className="notifications-section">
-          {/* ... your existing notifications code ... */}
+          <h2>Recent Notifications</h2>
+          {notifications.length > 0 ? (
+            <div className="notifications-list">
+              {notifications.map(notification => (
+                <div key={notification.notification_id} className="notification-item">
+                  <div className="notification-header">
+                    <h3>{notification.title}</h3>
+                    <span className="notification-date">
+                      {new Date(notification.created_at).toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="notification-message">{notification.message}</p>
+                  {notification.type === 'scouting_request' && (
+                    <div className="notification-actions">
+                      <button 
+                        onClick={() => handleNotificationAction(notification.notification_id, 'approve')}
+                        className="approve-button"
+                      >
+                        Approve
+                      </button>
+                      <button 
+                        onClick={() => handleNotificationAction(notification.notification_id, 'reject')}
+                        className="reject-button"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="no-notifications">No recent notifications</p>
+          )}
         </div>
       </div>
     </div>
