@@ -15,33 +15,34 @@ const ScoutDashboard = () => {
     const [currentUser, setCurrentUser] = useState(null);
 
 
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem('user'));
                 setCurrentUser(user);
-                console.log('Current user:', user); // Debug log
+                console.log('Current user:', user);
 
                 if (!user || !user.id) {
                     throw new Error('User not found in localStorage');
                 }
-        
+
                 // Fetch all players
                 const allPlayers = await api.get('/players');
-                setPlayers(allPlayers.data);
-        
-                // Fetch scouted players - updated endpoint
+                setPlayers(allPlayers.data || []);
+
+                // Fetch scouted players - ensure we always get an array
                 const scoutedResponse = await api.get(`/scout/scoutedplayers/${user.id}`);
-                setScoutedPlayers(scoutedResponse.data);
-        
+                setScoutedPlayers(Array.isArray(scoutedResponse.data) ? scoutedResponse.data : []);
+
                 // Fetch notifications
                 const notificationsResponse = await api.get(`/scout/notifications/${user.id}`);
-                setNotifications(notificationsResponse.data);
-        
+                setNotifications(notificationsResponse.data || []);
+
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setScoutedPlayers([]); // Ensure it's always an array
                 setLoading(false);
             }
         };
@@ -54,11 +55,11 @@ const ScoutDashboard = () => {
             // Get basic player info
             const playerResponse = await api.get(`/players/${playerId}`);
             setSelectedPlayer(playerResponse.data);
-            
+
             // Get performance data
             const performanceResponse = await api.get(`/scout/player-performance/${playerId}`);
             setPerformanceData(performanceResponse.data.data); // Access the data property
-            
+
         } catch (error) {
             console.error('Error fetching player data:', error);
             setPerformanceData(null); // Clear performance data on error
@@ -67,33 +68,33 @@ const ScoutDashboard = () => {
 
     const handleScoutPlayer = async () => {
         if (!selectedPlayer || !currentUser) return;
-        
+
         try {
             setScoutingLoading(true);
-            
+
             console.log('Current user object:', currentUser); // Debug log
             console.log('Attempting to scout with:', {
                 scout_id: currentUser.id,
                 player_id: selectedPlayer.player_id
             });
-    
+
             const response = await api.post('/scout/scout', {
                 scout_id: currentUser.id, // Make sure this matches what backend expects
                 player_id: selectedPlayer.player_id
             });
-            
+
             // Update UI with returned performance data
             if (response.data.performance_data) {
                 setPerformanceData(response.data.performance_data);
             }
-            
+
             // Refresh scouted players list
             const scoutedResponse = await api.get(`/scout/scoutedplayers/${currentUser.id}`);
             console.log('Refreshed scouted players:', scoutedResponse.data);
             setScoutedPlayers(scoutedResponse.data);
-            
+
             alert('Player scouted successfully!');
-            
+
         } catch (error) {
             console.error('Full error object:', error);
             console.error('Error response:', error.response);
@@ -145,6 +146,8 @@ const ScoutDashboard = () => {
 
     if (loading) return <div className="loading">Loading dashboard...</div>;
 
+    const isPlayerScouted = Array.isArray(scoutedPlayers) &&
+        scoutedPlayers.some(p => p.player_id === selectedPlayer?.player_id);
     return (
         <div className="scout-dashboard">
             <header className="dashboard-header">
@@ -248,14 +251,14 @@ const ScoutDashboard = () => {
                                 </div>
 
                                 <div className="scout-actions">
-                                    {activeTab === 'scout' && !scoutedPlayers.some(p => p.player_id === selectedPlayer.player_id) && (
-                                        <button 
-                                        className="scout-button"
-                                        onClick={handleScoutPlayer}
-                                        disabled={scoutingLoading}
-                                      >
-                                        {scoutingLoading ? 'Scouting...' : 'Scout This Player'}
-                                      </button>
+                                    {activeTab === 'scout' && !isPlayerScouted && (
+                                        <button
+                                            className="scout-button"
+                                            onClick={handleScoutPlayer}
+                                            disabled={scoutingLoading}
+                                        >
+                                            {scoutingLoading ? 'Scouting...' : 'Scout This Player'}
+                                        </button>
                                     )}
 
                                     <div className="send-notification">

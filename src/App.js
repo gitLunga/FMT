@@ -75,6 +75,8 @@ function App() {
 
           <Route exact path='/AdministratorDash' element={<AdministratorDash />} />
 
+          
+
           <Route exact path='/ReportPage' element={<ReportPage />} />
 
           {/* PLAYER ROUTES */}
