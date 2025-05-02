@@ -66,23 +66,21 @@ const ScoutDashboard = () => {
     };
 
     const handleScoutPlayer = async () => {
-        if (!selectedPlayer) return;
+        if (!selectedPlayer || !currentUser) return;
         
         try {
             setScoutingLoading(true);
-
-            const user = JSON.parse(localStorage.getItem('user'));
-            console.log('Scouting player with:', {
+            
+            console.log('Current user object:', currentUser); // Debug log
+            console.log('Attempting to scout with:', {
                 scout_id: currentUser.id,
                 player_id: selectedPlayer.player_id
             });
-
+    
             const response = await api.post('/scout/scout', {
-                scout_id: currentUser.id, // Use the logged-in user's ID
+                scout_id: currentUser.id, // Make sure this matches what backend expects
                 player_id: selectedPlayer.player_id
             });
-
-         
             
             // Update UI with returned performance data
             if (response.data.performance_data) {
@@ -90,17 +88,16 @@ const ScoutDashboard = () => {
             }
             
             // Refresh scouted players list
-            const scoutedResponse = await api.get(`/scout/scoutedplayers/${user.user_id}`);
-            console.log('Scouted Players:', scoutedResponse.data);
+            const scoutedResponse = await api.get(`/scout/scoutedplayers/${currentUser.id}`);
+            console.log('Refreshed scouted players:', scoutedResponse.data);
             setScoutedPlayers(scoutedResponse.data);
             
-            // Show success message
             alert('Player scouted successfully!');
             
         } catch (error) {
-            console.error('Error scouting player:', error);
+            console.error('Full error object:', error);
+            console.error('Error response:', error.response);
             alert(error.response?.data?.error || 'Failed to scout player');
-
         } finally {
             setScoutingLoading(false);
         }
