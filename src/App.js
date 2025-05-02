@@ -22,6 +22,11 @@ import ReportPage from './component/ADMIN/ReportPage';
 
 import SettingsPage from './component/SettingsPage';
 
+//PLAYER COMPONENTS
+ import PlayerDashboard from './component/PLAYER/PlayerDashboard';
+
+ //SCOUT COMPONENTS
+import ScoutDashboard from './component/SCOUT/ScoutDashboard'; 
 
 // import SettingsPage from './component/SettingsPage';
 
@@ -67,6 +72,12 @@ function App() {
           <Route exact path='/ViewPerformances' element={<ViewPerformances />} />
 
           <Route exact path='/ReportPage' element={<ReportPage />} />
+
+          {/* PLAYER ROUTES */}
+          <Route exact path='/PlayerDashboard' element={<PlayerDashboard />} />
+
+          {/* SCOUT ROUTES */}
+          <Route exact path='/ScoutDashboard' element={<ScoutDashboard />} />
 
             {/* other pages  */}
           <Route exact path='/SettingsPage' element={<SettingsPage />} />

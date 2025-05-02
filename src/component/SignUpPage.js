@@ -9,7 +9,8 @@ const SignUpPage = () => {
     lastName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: '' // Added role to formData
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -27,29 +28,35 @@ const SignUpPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.firstName.trim()) {
       newErrors.firstName = 'First name is required';
     }
-    
+
     if (!formData.lastName.trim()) {
       newErrors.lastName = 'Last name is required';
     }
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
+
+    if (!formData.role) {
+      newErrors.role = 'Please select a role';
+    }
+
     return newErrors;
   };
 
@@ -57,10 +64,10 @@ const SignUpPage = () => {
     e.preventDefault();
     const validationErrors = validateForm();
     setErrors(validationErrors);
-    
+
     if (Object.keys(validationErrors).length === 0) {
       setIsSubmitting(true);
-      
+
       try {
         const response = await fetch('http://localhost:5000/api/auth/register', {
           method: 'POST',
@@ -71,17 +78,18 @@ const SignUpPage = () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             email: formData.email,
-            password: formData.password // Sending plain text password
+            password: formData.password,
+            role: formData.role
           }),
         });
-  
+
         const data = await response.json();
-  
+
         if (!response.ok) {
           throw new Error(data.error || 'Registration failed');
         }
-  
-        // Redirect to login after successful registration
+
+        // Redirect based on role or to login
         navigate('/login');
       } catch (error) {
         setErrors({ form: error.message });
@@ -147,6 +155,23 @@ const SignUpPage = () => {
           </div>
 
           <div className="form-group">
+            <label htmlFor="role">Role</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className={errors.role ? 'error' : ''}
+            >
+              <option value="">Select your role</option>
+              <option value="admin">Admin</option>
+              <option value="scout">Scout</option>
+              <option value="player">Player</option>
+            </select>
+            {errors.role && <span className="error-message">{errors.role}</span>}
+          </div>
+
+          <div className="form-group">
             <label htmlFor="password">Password</label>
             <div className="password-input">
               <input
@@ -156,7 +181,7 @@ const SignUpPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 className={errors.password ? 'error' : ''}
-                placeholder="Create a password"
+                placeholder="Create a password (min 8 characters)"
               />
               <button
                 type="button"
@@ -199,8 +224,8 @@ const SignUpPage = () => {
             </label>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="auth-button"
             disabled={isSubmitting}
           >

@@ -43,7 +43,20 @@ const LoginPage = () => {
       
       // Redirect to dashboard
       // do not forget to add different navigation for different roles *****
-      navigate('/AdminDashboard');
+      switch(data.user.role) {
+        case 'admin':
+          navigate('/AdminDashboard');
+          break;
+        case 'scout':
+          navigate('/ScoutDashboard');
+          break;
+        case 'player':
+          navigate('/PlayerDashboard');
+          break;
+        default:
+          navigate('/');
+      }
+
     } catch (error) {
       setErrors({ form: error.message });
     }

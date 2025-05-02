@@ -10,13 +10,18 @@ const ViewContracts = () => {
   useEffect(() => {
     const fetchContracts = async () => {
       try {
-        const response = await api.get("/players/contracts");
-        console.log("API Response:", response.data); // Debug log
-        setContracts(response.data || []); // Ensure it's an array
+        // Match exactly with your backend route
+        const response = await api.get("/players/get-allcontracts");
+        
+        // Your backend returns either the data array or empty array
+        setContracts(response.data);
         setLoading(false);
       } catch (err) {
-        console.error("Error:", err);
-        setError(err.message || "Failed to fetch contracts");
+        console.error("Contract fetch error:", {
+          message: err.message,
+          response: err.response?.data
+        });
+        setError(err.response?.data?.error || "Failed to fetch contracts");
         setLoading(false);
       }
     };
@@ -24,16 +29,13 @@ const ViewContracts = () => {
   }, []);
 
   const formatCurrency = (amount) => {
-    if (!amount) return "-";
-    return new Intl.NumberFormat("en-ZA", {
-      style: "currency",
-      currency: "ZAR",
-    }).format(amount);
+    return amount ? 
+      new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(amount) 
+      : "-";
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return "-";
-    return new Date(dateString).toLocaleDateString("en-ZA");
+    return dateString ? new Date(dateString).toLocaleDateString("en-ZA") : "-";
   };
 
   if (loading) return <div className="loading">Loading contracts...</div>;
@@ -42,7 +44,6 @@ const ViewContracts = () => {
   return (
     <div className="contracts-container">
       <h1>Player Contracts</h1>
-
       <div className="table-container">
         <table className="contracts-table">
           <thead>
@@ -57,35 +58,26 @@ const ViewContracts = () => {
             </tr>
           </thead>
           <tbody>
-            {contracts.length > 0 ? (
-              contracts.map((contract) => (
-                <tr key={contract.contract_id}>
-                  <td>
-                    {contract.first_name} {contract.last_name}
-                  </td>
-                  <td>{contract.contract_type || "-"}</td>
-                  <td>{formatDate(contract.start_date)}</td>
-                  <td>{formatDate(contract.end_date)}</td>
-                  <td>{formatCurrency(contract.monthly_stipend)}</td>
-                  <td>{formatCurrency(contract.performance_bonus)}</td>
-                  <td>
-                    <span
-                      className={`status-badge ${contract.status?.toLowerCase()}`}
-                    >
-                      {contract.status || "-"}
-                    </span>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" className="no-results">
-                  No contracts found in the database.
+            {contracts.map((contract) => (
+              <tr key={contract.contract_id}>
+                <td>{contract.first_name} {contract.last_name}</td>
+                <td>{contract.contract_type || "-"}</td>
+                <td>{formatDate(contract.start_date)}</td>
+                <td>{formatDate(contract.end_date)}</td>
+                <td>{formatCurrency(contract.monthly_stipend)}</td>
+                <td>{formatCurrency(contract.performance_bonus)}</td>
+                <td>
+                  <span className={`status-badge ${contract.status?.toLowerCase()}`}>
+                    {contract.status || "-"}
+                  </span>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
+        {contracts.length === 0 && (
+          <div className="no-results">No contracts found</div>
+        )}
       </div>
     </div>
   );
