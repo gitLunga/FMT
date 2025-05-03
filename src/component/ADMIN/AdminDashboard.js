@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import AdministratorDash from "../ADMIN/AdministratorDash";
+
 import PlayerList from "../ADMIN/ViewPlayers";
 import AdminSideBar from "./AdminSidebar"; // Import the Sidebar component
 import "../ADMIN/styles/adminSideBar.css";
@@ -9,7 +11,7 @@ import SettingsPage from "../SettingsPage";
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState("players");
+  const [activeTab, setActiveTab] = useState("administratordash");
 
   return (
     <div className="dashboard-container">
@@ -29,8 +31,8 @@ const Dashboard = () => {
         </header>
 
         <div className="content-area">
+          {activeTab === "administratordash" && <AdministratorDash />}
           {activeTab === "players" && <PlayerList />}
-          {activeTab === "dashboard" && <DashboardHome />}
           {activeTab === "ReportPage" && <ReportPage />}
           {activeTab === "SettingsPage" && <SettingsPage />}
         </div>
@@ -40,12 +42,7 @@ const Dashboard = () => {
 };
 
 // Placeholder components
-const DashboardHome = () => (
-  <div className="dashboard-home">
-    <h2>Dashboard Overview</h2>
-    <p>Welcome to Football Academy Admin Panel</p>
-  </div>
-);
+
 
 
 
