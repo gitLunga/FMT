@@ -169,19 +169,19 @@ const PlayerForm = ({ onSuccess }) => {
               <option value="South Africa">South Africa</option>
               <option value="Nigeria">Nigeria</option>
               <option value="South Africa">Zimbabwe</option>
-              <option value="Nigeria">Lesotho</option>
-              <option value="Nigeria">Botswana</option>
-              <option value="Nigeria">Namibia</option>
-              <option value="Nigeria">Swaziland</option>
-              <option value="Nigeria">Mozambique</option>
-              <option value="Nigeria">Angola</option>
-              <option value="Nigeria">Tanzania</option>
-              <option value="Nigeria">Kenya</option>
-              <option value="Nigeria">Uganda</option>
-              <option value="Nigeria">Zambia</option>
-              <option value="Nigeria">Malawi</option>
-              <option value="Nigeria">Rwanda</option>
-              <option value="Nigeria">Burundi</option>
+              <option value="Lesotho">Lesotho</option>
+              <option value="Botswana">Botswana</option>
+              <option value="Namibia">Namibia</option>
+              <option value="Swaziland">Swaziland</option>
+              <option value="Mozambique">Mozambique</option>
+              <option value="Angola">Angola</option>
+              <option value="Tanzania">Tanzania</option>
+              <option value="Kenya">Kenya</option>
+              <option value="Uganda">Uganda</option>
+              <option value="Zambia">Zambia</option>
+              <option value="Malawi">Malawi</option>
+              <option value="Rwanda">Rwanda</option>
+              <option value="Burundi">Burundi</option>
               <option value="Other">Other</option>
             </select>
           </div>
