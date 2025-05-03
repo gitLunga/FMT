@@ -1,8 +1,26 @@
 import React from 'react';
 import { FileText, Users, Calendar, BarChart2 } from 'lucide-react';
 import '../ADMIN/styles/report.css';
+import { useNavigate } from 'react-router-dom';
 
 const ReportPage = () => {
+  const navigate = useNavigate();
+
+  const handleGenerateReport = () => {
+    console.log('Generating new report...');
+    navigate('/generate-report');
+  };
+
+  const handleViewReport = (reportId) => {
+    console.log(`Viewing report ${reportId}`);
+    navigate(`/report/${reportId}`); // Navigate to specific report page
+  };
+
+  const handleDownloadReport = (reportId) => {
+    console.log(`Downloading report ${reportId}`);
+    // Add your download logic here
+  };
+
   // Sample report data
   const reports = [
     {
@@ -11,8 +29,7 @@ const ReportPage = () => {
       type: 'Performance',
       date: '2023-06-15',
       icon: <Users size={20} />
-    },
-    {
+    },{
       id: 2,
       title: 'Monthly Attendance',
       type: 'Attendance',
@@ -33,13 +50,16 @@ const ReportPage = () => {
       date: '2023-06-05',
       icon: <FileText size={20} />
     }
+    // ... other reports
   ];
 
   return (
     <div className="reports-container">
       <div className="reports-header">
         <h2><FileText size={24} /> Reports</h2>
-        <button className="generate-btn">Generate New Report</button>
+        <button className="generate-btn" onClick={handleGenerateReport}>
+          Generate New Report
+        </button>
       </div>
 
       <div className="reports-grid">
@@ -54,8 +74,18 @@ const ReportPage = () => {
               <p className="report-date">{report.date}</p>
             </div>
             <div className="report-actions">
-              <button className="view-btn">View</button>
-              <button className="download-btn">Download</button>
+              <button 
+                className="view-btn" 
+                onClick={() => handleViewReport(report.id)} // Fixed: using onClick
+              >
+                View
+              </button>
+              <button 
+                className="download-btn"
+                onClick={() => handleDownloadReport(report.id)}
+              >
+                Download
+              </button>
             </div>
           </div>
         ))}
