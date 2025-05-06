@@ -19,6 +19,9 @@ const ViewContracts = () => {
     direction: "desc"
   });
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editContractData, setEditContractData] = useState(null);
+
   useEffect(() => {
     fetchContracts();
   }, []);
@@ -34,10 +37,44 @@ const ViewContracts = () => {
     }
   };
 
+  const handleEditContract = (contractId) => {
+    const contract = contracts.find(c => c.contract_id === contractId);
+    setEditContractData(contract);
+    setIsEditModalOpen(true);
+  };
+
+  const handleDeleteContract = async (contractId) => {
+    if (window.confirm('Are you sure you want to delete this contract?')) {
+      try {
+        await api.delete(`/players/contracts/${contractId}`);
+        setContracts(contracts.filter(contract => contract.contract_id !== contractId));
+        alert('Contract deleted successfully');
+      } catch (err) {
+        setError('Failed to delete contract');
+        console.error(err);
+      }
+    }
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      await api.put(`players/contracts/${editContractData.contract_id}`, editContractData);
+      setContracts(prevContracts =>
+        prevContracts.map(c =>
+          c.contract_id === editContractData.contract_id ? editContractData : c
+        )
+      );
+      setIsEditModalOpen(false);
+      alert('Contract updated successfully');
+    } catch (err) {
+      setError('Failed to update contract');
+      console.error(err);
+    }
+  };
+
   const filterAndSortContracts = useCallback(() => {
     let result = [...contracts];
 
-    // Apply filters
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase();
       result = result.filter(c =>
@@ -62,7 +99,6 @@ const ViewContracts = () => {
       result = result.filter(c => c.monthly_stipend >= Number(filters.minAmount));
     }
 
-    // Apply sorting
     if (sortConfig.key) {
       result.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -100,9 +136,14 @@ const ViewContracts = () => {
     return sortConfig.direction === 'asc' ? '↑' : '↓';
   };
 
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditContractData(prev => ({ ...prev, [name]: value }));
+  };
+
   const formatCurrency = (amount) => {
-    return amount ?
-      new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(amount)
+    return amount ? 
+      new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR" }).format(amount) 
       : "-";
   };
 
@@ -116,7 +157,7 @@ const ViewContracts = () => {
   return (
     <div className="table-view-container">
       <h1>Player Contracts</h1>
-
+      
       <div className="filters-container">
         <div className="filter-group">
           <label>Search:</label>
@@ -128,7 +169,7 @@ const ViewContracts = () => {
             placeholder="Search contracts..."
           />
         </div>
-
+        
         <div className="filter-group">
           <label>Status:</label>
           <select name="status" value={filters.status} onChange={handleFilterChange}>
@@ -138,7 +179,7 @@ const ViewContracts = () => {
             <option value="terminated">Terminated</option>
           </select>
         </div>
-
+        
         <div className="filter-group">
           <label>From Date:</label>
           <input
@@ -148,7 +189,7 @@ const ViewContracts = () => {
             onChange={handleFilterChange}
           />
         </div>
-
+        
         <div className="filter-group">
           <label>To Date:</label>
           <input
@@ -158,7 +199,7 @@ const ViewContracts = () => {
             onChange={handleFilterChange}
           />
         </div>
-
+        
         <div className="filter-group">
           <label>Min Amount:</label>
           <input
@@ -170,8 +211,8 @@ const ViewContracts = () => {
             min="0"
           />
         </div>
-
-        <button
+        
+        <button 
           className="reset-filters"
           onClick={() => setFilters({
             search: "",
@@ -210,9 +251,7 @@ const ViewContracts = () => {
               <th onClick={() => handleSort('status')}>
                 Status {getSortIndicator('status')}
               </th>
-              <th >
-                Actions
-              </th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -231,23 +270,116 @@ const ViewContracts = () => {
                     </span>
                   </td>
                   <td className="actions-column">
-                    <button className="edit-btn">Edit</button>
-                    <button className="delete-btn">Delete</button>
+                    <button 
+                      className="edit-btn"
+                      onClick={() => handleEditContract(contract.contract_id)}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      className="delete-btn"
+                      onClick={() => handleDeleteContract(contract.contract_id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="no-results">No contracts found matching your criteria</td>
+                <td colSpan="8" className="no-results">No contracts found matching your criteria</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-
+      
       <div className="summary">
         Showing {filteredContracts.length} of {contracts.length} contracts
       </div>
+
+      {isEditModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Edit Contract</h2>
+            
+            <div className="modal-form-group">
+              <label>Contract Type:</label>
+              <select
+                name="contract_type"
+                value={editContractData?.contract_type || ''}
+                onChange={handleEditInputChange}
+              >
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Trial">Trial</option>
+              </select>
+            </div>
+            
+            <div className="modal-form-group">
+              <label>Start Date:</label>
+              <input 
+                type="date"
+                name="start_date"
+                value={editContractData?.start_date?.slice(0, 10) || ''}
+                onChange={handleEditInputChange}
+              />
+            </div>
+            
+            <div className="modal-form-group">
+              <label>End Date:</label>
+              <input 
+                type="date"
+                name="end_date"
+                value={editContractData?.end_date?.slice(0, 10) || ''}
+                onChange={handleEditInputChange}
+              />
+            </div>
+            
+            <div className="modal-form-group">
+              <label>Monthly Stipend (ZAR):</label>
+              <input 
+                type="number"
+                name="monthly_stipend"
+                min="0"
+                step="1000"
+                value={editContractData?.monthly_stipend || ''}
+                onChange={handleEditInputChange}
+              />
+            </div>
+            
+            <div className="modal-form-group">
+              <label>Performance Bonus (ZAR):</label>
+              <input 
+                type="number"
+                name="performance_bonus"
+                min="0"
+                step="1000"
+                value={editContractData?.performance_bonus || ''}
+                onChange={handleEditInputChange}
+              />
+            </div>
+            
+            <div className="modal-form-group">
+              <label>Status:</label>
+              <select
+                name="status"
+                value={editContractData?.status || ''}
+                onChange={handleEditInputChange}
+              >
+                <option value="Active">Active</option>
+                <option value="Expired">Expired</option>
+                <option value="Terminated">Terminated</option>
+              </select>
+            </div>
+            
+            <div className="modal-buttons">
+              <button className="save-btn" onClick={handleSaveEdit}>Save</button>
+              <button className="cancel-btn" onClick={() => setIsEditModalOpen(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

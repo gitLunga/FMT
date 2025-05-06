@@ -44,7 +44,7 @@ const ViewPerformances = () => {
   const handleDeletePerformance = async (performanceId) => {
     if (window.confirm('Are you sure you want to delete this performance record?')) {
       try {
-        await api.delete(`/performances/${performanceId}`);
+        await api.delete(`/players/performances/${performanceId}`);
         setPerformances(performances.filter(performance => performance.performance_id !== performanceId));
         alert('Performance record deleted successfully');
       } catch (err) {
@@ -56,7 +56,7 @@ const ViewPerformances = () => {
 
   const handleSaveEdit = async () => {
     try {
-      await api.put(`/performances/${editPerformanceData.performance_id}`, editPerformanceData);
+      await api.put(`/players/performances/${editPerformanceData.performance_id}`, editPerformanceData);
       setPerformances(prevPerformances =>
         prevPerformances.map(p =>
           p.performance_id === editPerformanceData.performance_id ? editPerformanceData : p
