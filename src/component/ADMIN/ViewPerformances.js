@@ -30,6 +30,16 @@ const ViewPerformances = () => {
     setEditPerformanceData(performance);
     setIsEditModalOpen(true);
   };
+  const fetchPerformances = async () => {
+    try {
+      const response = await api.get('/players/performances');
+      setPerformances(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
   const handleDeletePerformance = async (performanceId) => {
     if (window.confirm('Are you sure you want to delete this performance record?')) {
@@ -100,16 +110,7 @@ const ViewPerformances = () => {
     filterAndSortPerformances();
   }, [filterAndSortPerformances]);
 
-  const fetchPerformances = async () => {
-    try {
-      const response = await api.get('/players/get-allperformances');
-      setPerformances(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+ 
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;

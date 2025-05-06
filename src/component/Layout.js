@@ -47,9 +47,9 @@ const Layout = ({ children }) => {
               Contact Us
             </button>
           </nav>
-          <div className="user-actions">
+          {/* <div className="user-actions">
             <button className="user-avatar">VL</button>
-          </div>
+          </div> */}
         </div>
       </header>
 
