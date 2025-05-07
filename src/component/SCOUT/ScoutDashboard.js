@@ -14,7 +14,7 @@ const ScoutDashboard = () => {
     const [scoutingLoading, setScoutingLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     // const [showPlayerModal, setShowPlayerModal] = useState(false);
-    // const [detailedPerformance, setDetailedPerformance] = useState(null);
+    const [showPerformanceModal, setShowPerformanceModal] = useState(false);
 
 
 
@@ -44,7 +44,7 @@ const ScoutDashboard = () => {
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
-                setScoutedPlayers([]); // Ensure it's always an array
+                setScoutedPlayers([]);
                 setLoading(false);
             }
         };
@@ -60,11 +60,14 @@ const ScoutDashboard = () => {
 
             // Get performance data
             const performanceResponse = await api.get(`/scout/player-performance/${playerId}`);
-            setPerformanceData(performanceResponse.data.data); // Access the data property
+            setPerformanceData(performanceResponse.data.data);
+            
+            // Show the performance modal
+            setShowPerformanceModal(true);
 
         } catch (error) {
             console.error('Error fetching player data:', error);
-            setPerformanceData(null); // Clear performance data on error
+            setPerformanceData(null);
         }
     };
 
@@ -146,10 +149,106 @@ const ScoutDashboard = () => {
         }
     };
 
+    const renderPerformanceModal = () => {
+        if (!showPerformanceModal || !performanceData || !selectedPlayer) return null;
+
+        const isPlayerScouted = Array.isArray(scoutedPlayers) &&
+            scoutedPlayers.some(p => p.player_id === selectedPlayer.player_id);
+
+        return (
+            <div className="performance-modal">
+                <div className="modal-content">
+                    <button 
+                        className="close-modal" 
+                        onClick={() => setShowPerformanceModal(false)}
+                    >
+                        &times;
+                    </button>
+                    
+                    <h2>{selectedPlayer.first_name} {selectedPlayer.last_name}'s Performance</h2>
+                    
+                    <div className="player-meta">
+                        <p>{selectedPlayer.position} | {selectedPlayer.nationality}</p>
+                    </div>
+                    
+                    <div className="performance-summary">
+                        <div className="overall-rating">
+                            <h3>Overall Rating</h3>
+                            <div className="rating-value">
+                                {performanceData.overall_rating || 'N/A'}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="performance-details">
+                        <div className="performance-category">
+                            <h4>Technical Skills</h4>
+                            <p>Score: {performanceData.technical_score || 'N/A'}</p>
+                        </div>
+                        
+                        <div className="performance-category">
+                            <h4>Tactical Awareness</h4>
+                            <p>Score: {performanceData.tactical_score || 'N/A'}</p>
+                        </div>
+                        
+                        <div className="performance-category">
+                            <h4>Physical Attributes</h4>
+                            <p>Score: {performanceData.physical_score || 'N/A'}</p>
+                        </div>
+                        
+                        <div className="performance-category">
+                            <h4>Psychological Attributes</h4>
+                            <p>Score: {performanceData.psychological_score || 'N/A'}</p>
+                        </div>
+                    </div>
+                    
+                    {performanceData.coach_comments && (
+                        <div className="coach-comments">
+                            <h4>Coach Comments</h4>
+                            <p>{performanceData.coach_comments}</p>
+                        </div>
+                    )}
+                    
+                    <div className="modal-actions">
+                        {activeTab === 'scout' && !isPlayerScouted && (
+                            <button
+                                className="scout-button"
+                                onClick={handleScoutPlayer}
+                                disabled={scoutingLoading}
+                            >
+                                {scoutingLoading ? 'Scouting...' : 'Scout This Player'}
+                            </button>
+                        )}
+                        
+                        <div className="notification-section">
+                            <textarea
+                                value={notificationMessage}
+                                onChange={(e) => setNotificationMessage(e.target.value)}
+                                placeholder="Write your message to the player..."
+                            />
+                            <button
+                                onClick={handleSendNotification}
+                                disabled={!notificationMessage}
+                                className="notification-button"
+                            >
+                                Send Notification
+                            </button>
+                        </div>
+                        
+                        <button 
+                            className="close-button"
+                            onClick={() => setShowPerformanceModal(false)}
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     if (loading) return <div className="loading">Loading dashboard...</div>;
 
-    const isPlayerScouted = Array.isArray(scoutedPlayers) &&
-        scoutedPlayers.some(p => p.player_id === selectedPlayer?.player_id);
     return (
         <div className="scout-dashboard">
             <header className="dashboard-header">
@@ -170,7 +269,6 @@ const ScoutDashboard = () => {
                 </nav>
             </header>
 
-            {/* Notifications Panel */}
             <div className="notifications-panel">
                 <h3>Notifications ({notifications.filter(n => !n.is_read).length})</h3>
                 <div className="notifications-list">
@@ -197,7 +295,7 @@ const ScoutDashboard = () => {
                             {players.map(player => (
                                 <div
                                     key={player.player_id}
-                                    className={`player-card ${selectedPlayer?.player_id === player.player_id ? 'selected' : ''}`}
+                                    className="player-card"
                                     onClick={() => handlePlayerSelect(player.player_id)}
                                 >
                                     <div className="player-avatar">
@@ -237,56 +335,9 @@ const ScoutDashboard = () => {
                         )}
                     </div>
                 )}
-
-                {(selectedPlayer || activeTab === 'my-players') && (
-                    <div className="player-details">
-                        {selectedPlayer ? (
-                            <>
-                                <h2>{selectedPlayer.first_name} {selectedPlayer.last_name}</h2>
-                                <div className="player-stats">
-                                    <h3>Performance Data</h3>
-                                    {performanceData && performanceData.overall_rating && (
-                                        <div className="performance-badge">
-                                            Overall Rating: {performanceData.overall_rating}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="scout-actions">
-                                    {activeTab === 'scout' && !isPlayerScouted && (
-                                        <button
-                                            className="scout-button"
-                                            onClick={handleScoutPlayer}
-                                            disabled={scoutingLoading}
-                                        >
-                                            {scoutingLoading ? 'Scouting...' : 'Scout This Player'}
-                                        </button>
-                                    )}
-
-                                    <div className="send-notification">
-                                        <h3>Send Notification</h3>
-                                        <textarea
-                                            value={notificationMessage}
-                                            onChange={(e) => setNotificationMessage(e.target.value)}
-                                            placeholder="Write your message to the player..."
-                                        />
-                                        <button
-                                            onClick={handleSendNotification}
-                                            disabled={!notificationMessage}
-                                        >
-                                            Send Notification
-                                        </button>
-                                    </div>
-                                </div>
-                            </>
-                        ) : (
-                            <div className="select-player-prompt">
-                                <p>Select a player to view details and send notifications</p>
-                            </div>
-                        )}
-                    </div>
-                )}
             </div>
+
+            {renderPerformanceModal()}
         </div>
     );
 };

@@ -319,3 +319,145 @@
   .scout-button:hover {
     background-color: #2980b9;
   }
+
+  /* Performance Modal Styles */
+.performance-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff86;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.performance-summary {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.overall-rating {
+  margin-bottom: 1.5rem;
+}
+
+.rating-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.performance-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.performance-category {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.performance-category h4 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.coach-comments {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+/* Updated Modal Actions */
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.notification-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notification-section textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.notification-button {
+  padding: 0.5rem 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.notification-button:hover {
+  background-color: #2980b9;
+}
+
+.notification-button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.scout-button {
+  padding: 0.5rem 1rem;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.scout-button:hover {
+  background-color: #27ae60;
+}
+
+.scout-button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.player-meta {
+  color: #7f8c8d;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
