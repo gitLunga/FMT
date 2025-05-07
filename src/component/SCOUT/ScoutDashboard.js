@@ -35,8 +35,12 @@ const ScoutDashboard = () => {
 
                 // Fetch scouted players - ensure we always get an array
                 const scoutedResponse = await api.get(`/scout/scoutedplayers/${user.id}`);
-                setScoutedPlayers(Array.isArray(scoutedResponse.data) ? scoutedResponse.data : []);
-
+                console.log('Fetched scouted players:', scoutedResponse.data);
+                const playersData = Array.isArray(scoutedResponse.data) 
+                ? scoutedResponse.data 
+                : scoutedResponse.data?.data || [];
+            
+            setScoutedPlayers(playersData);
                 // Fetch notifications
                 const notificationsResponse = await api.get(`/scout/notifications/${user.id}`);
                 setNotifications(notificationsResponse.data || []);
@@ -324,6 +328,10 @@ const ScoutDashboard = () => {
                                         <h3>{player.first_name} {player.last_name}</h3>
                                         <p>Status: <span className={`status ${player.status}`}>{player.status}</span></p>
                                         <p>Scouted on: {new Date(player.scouted_date).toLocaleDateString()}</p>
+                                        <p>Performance Rating: {player.overall_rating || 'N/A'}</p>
+                                        <p>Nationality: {player.nationality}</p>
+                                        <p>Position: {player.position }</p>
+                                            
                                         <button onClick={() => handlePlayerSelect(player.player_id)}>
                                             View Performance
                                         </button>
