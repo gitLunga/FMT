@@ -115,7 +115,7 @@ const ScoutDashboard = () => {
         try {
             const user = JSON.parse(localStorage.getItem('user'));
 
-            await api.post('/notifications', {
+            await api.post('/scout/notifications', {
                 user_id: selectedPlayer.user_id,
                 title: 'Scouting Notification',
                 message: notificationMessage,
@@ -128,7 +128,7 @@ const ScoutDashboard = () => {
             setNotificationMessage('');
 
             // Refresh notifications
-            const notificationsResponse = await api.get(`/notifications/${user.user_id}`);
+            const notificationsResponse = await api.get(`/scout/notifications/${user.user_id}`);
             setNotifications(notificationsResponse.data);
         } catch (error) {
             console.error('Error sending notification:', error);
@@ -142,7 +142,7 @@ const ScoutDashboard = () => {
 
             // Refresh notifications
             const user = JSON.parse(localStorage.getItem('user'));
-            const notificationsResponse = await api.get(`/notifications/${user.user_id}`);
+            const notificationsResponse = await api.get(`/scout/notifications/${user.user_id}`);
             setNotifications(notificationsResponse.data);
         } catch (error) {
             console.error('Error marking notification as read:', error);
