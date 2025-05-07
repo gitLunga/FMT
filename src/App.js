@@ -8,6 +8,7 @@ import LoginF from './component/Login';
 import SignUpPage from './component/SignUpPage';
 
 // ADMIN COMPONENTS
+import AdminLayout from './component/ADMIN/AdminLayout';
 import PlayerForm from './component/ADMIN/PlayerForm';
 import AdminDashboard from './component/ADMIN/AdminDashboard';
 import ViewPlayers from './component/ADMIN/ViewPlayers';
@@ -53,7 +54,7 @@ function App() {
           <Route exact path='/login' element={<LoginF />} />
 
           {/* //ADMIN ROUTES */}
-
+          <Route element={<AdminLayout />}></Route>
           <Route exact path='/playerform' element={<PlayerForm />} />
           <Route path="/register" element={<SignUpPage />} />
           <Route

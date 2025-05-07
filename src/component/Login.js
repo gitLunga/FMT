@@ -18,7 +18,7 @@ const LoginPage = () => {
       setErrors(validationErrors);
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
@@ -31,19 +31,19 @@ const LoginPage = () => {
           rememberMe
         }),
       });
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         throw new Error(data.error || 'Login failed');
       }
-  
+
       // Store user data in localStorage/sessionStorage
       localStorage.setItem('user', JSON.stringify(data.user));
-      
+
       // Redirect to dashboard
       // do not forget to add different navigation for different roles *****
-      switch(data.user.role) {
+      switch (data.user.role) {
         case 'admin':
           navigate('/AdminDashboard');
           break;
@@ -73,6 +73,12 @@ const LoginPage = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
+        <button
+          className="back-button"
+          onClick={() => navigate(-1)} // Go back to previous page
+        >
+          &larr; Back
+        </button>
         <div className="auth-header">
           <h2>Login to Your Account</h2>
           <p>Welcome back! Please enter your details.</p>

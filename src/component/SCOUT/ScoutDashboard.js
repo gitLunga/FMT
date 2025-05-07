@@ -13,6 +13,8 @@ const ScoutDashboard = () => {
     const [notifications, setNotifications] = useState([]);
     const [scoutingLoading, setScoutingLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
+    // const [showPlayerModal, setShowPlayerModal] = useState(false);
+    // const [detailedPerformance, setDetailedPerformance] = useState(null);
 
 
 
