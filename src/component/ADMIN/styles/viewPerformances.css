@@ -1,7 +1,41 @@
-.contracts-container {
+/* viewPerformances.css - Matched to viewContracts.css */
+.performances-container {
     padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* Header container styling */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-container h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #2c3e50;
+}
+
+.add-btn {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
 
 .filters-container {
     display: flex;
@@ -20,10 +54,17 @@
     font-weight: 500;
 }
 
+.filter-group input,
+.filter-group select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 .reset-filters {
     align-self: flex-end;
     padding: 5px 10px;
-    background-color: #f5f5f5;
+    background-color: #f5f5f596;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
@@ -33,41 +74,55 @@
     overflow-x: auto;
 }
 
-.contracts-table {
+.performances-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
-.contracts-table th, .contracts-table td {
+.performances-table th, 
+.performances-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
-.contracts-table th {
+.performances-table th {
     background-color: #f8f9fa;
     font-weight: 600;
+    cursor: pointer;
 }
 
-.status-badge {
+.performances-table th:hover {
+    background-color: #e9ecef;
+}
+
+.rating-badge {
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
     font-weight: 500;
+    display: inline-block;
+    min-width: 50px;
+    text-align: center;
 }
 
-.status-badge.active {
+.rating-badge.excellent {
     background-color: #d4edda;
     color: #155724;
 }
 
-.status-badge.expired {
+.rating-badge.good {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.rating-badge.average {
     background-color: #fff3cd;
     color: #856404;
 }
 
-.status-badge.terminated {
+.rating-badge.poor {
     background-color: #f8d7da;
     color: #721c24;
 }
@@ -83,4 +138,134 @@
     padding: 20px;
     color: #6c757d;
     font-style: italic;
+}
+
+/* Action buttons */
+.actions-column {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn, 
+.delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.edit-btn {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.edit-btn:hover {
+    background-color: #e0a800;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: rgba(59, 223, 209, 0.582);
+    padding: 25px;
+    border-radius: 5px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.modal-form-group {
+    margin-bottom: 15px;
+}
+
+.modal-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.modal-form-group input,
+.modal-form-group textarea,
+.modal-form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.modal-form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.save-btn, 
+.cancel-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #5a6268;
+}
+
+.loading, 
+.error {
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.error {
+    color: #dc3545;
 }

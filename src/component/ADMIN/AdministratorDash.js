@@ -3,6 +3,7 @@ import './styles/administratorDash.css';
 import api from '../../api';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 // Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -20,6 +21,7 @@ const AdminDashboard = () => {
   const [notifications, setNotifications] = useState([]);
   const [scoutingData, setScoutingData] = useState(null);
   const [playerData, setPlayerData] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchData = async () => {
@@ -183,6 +185,12 @@ const AdminDashboard = () => {
             <p className="no-notifications">No recent notifications</p>
           )}
         </div>
+        <button
+          className="back-button"
+          onClick={() => navigate(-1)} // Go back to previous page
+        >
+          &larr; Back
+        </button>
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ const SettingsPage = () => {
             className="language-select"
           >
             <option value="english">English</option>
-            <option value="spanish">ZULU</option>
+            <option value="zulu">Zulu</option>
             <option value="french">French</option>
             <option value="german">German</option>
           </select>

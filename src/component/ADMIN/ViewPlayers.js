@@ -392,6 +392,7 @@ const PlayerList = () => {
               <button className="cancel-btn" onClick={() => setIsEditModalOpen(false)}>Cancel</button>
             </div>
           </div>
+          
         </div>
       )}
     </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import api from "../../api";
 import "../ADMIN/styles/viewContracts.css";
+import { useNavigate } from 'react-router-dom';
+
 
 const ViewContracts = () => {
   const [contracts, setContracts] = useState([]);
@@ -21,6 +23,7 @@ const ViewContracts = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editContractData, setEditContractData] = useState(null);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchContracts();
@@ -41,6 +44,11 @@ const ViewContracts = () => {
     const contract = contracts.find(c => c.contract_id === contractId);
     setEditContractData(contract);
     setIsEditModalOpen(true);
+  };
+
+  
+  const handleAddContract = () => {
+    navigate('/PlayerContractForm'); // Redirect to the contract form page
   };
 
   const handleDeleteContract = async (contractId) => {
@@ -157,6 +165,13 @@ const ViewContracts = () => {
   return (
     <div className="table-view-container">
       <h1>Player Contracts</h1>
+
+        <button 
+          className="add-btn"
+          onClick={handleAddContract}
+        >
+          Add Contract
+        </button>
       
       <div className="filters-container">
         <div className="filter-group">
