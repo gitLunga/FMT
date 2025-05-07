@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../api';
 import '../ADMIN/styles/viewPerformances.css';
+import { useNavigate } from 'react-router-dom';
 
 const ViewPerformances = () => {
   const [performances, setPerformances] = useState([]);
@@ -20,6 +21,7 @@ const ViewPerformances = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editPerformanceData, setEditPerformanceData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPerformances();
@@ -30,6 +32,7 @@ const ViewPerformances = () => {
     setEditPerformanceData(performance);
     setIsEditModalOpen(true);
   };
+
   const fetchPerformances = async () => {
     try {
       const response = await api.get('/players/performances');
@@ -39,6 +42,10 @@ const ViewPerformances = () => {
       setError(err.message);
       setLoading(false);
     }
+  };
+
+  const handleAddPerformance = () => {
+    navigate('/PlayerPerformanceForm');
   };
 
   const handleDeletePerformance = async (performanceId) => {
@@ -110,8 +117,6 @@ const ViewPerformances = () => {
     filterAndSortPerformances();
   }, [filterAndSortPerformances]);
 
- 
-
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
@@ -149,7 +154,15 @@ const ViewPerformances = () => {
 
   return (
     <div className="performances-container">
-      <h1>Player Performance Assessments</h1>
+      <div className="header-container">
+        <h1>Player Performance Assessments</h1>
+        <button 
+          className="add-btn"
+          onClick={handleAddPerformance}
+        >
+          Add Performance
+        </button>
+      </div>
       
       <div className="filters-container">
         <div className="filter-group">

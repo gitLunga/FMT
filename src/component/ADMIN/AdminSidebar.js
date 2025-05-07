@@ -90,23 +90,23 @@ import {
           <button 
             className="nav-item action-item"
             onClick={() => {
-              navigate("/PlayerPerformanceForm");
+              navigate("/ViewPerformances");
               setActiveTab("reports"); // Keep reports tab active
             }}
           >
             <FileText size={20} />
-            {!collapsed && <span>Add Report</span>}
+            {!collapsed && <span>Manage Performances</span>}
           </button>
           
           <button 
             className="nav-item action-item"
             onClick={() => {
-              navigate("/PlayerContractForm");
+              navigate("/ViewContracts");
               setActiveTab("players"); // Contracts relate to players
             }}
           >
             <FileSignature size={20} />
-            {!collapsed && <span>Add Contract</span>}
+            {!collapsed && <span>Manage Contracts</span>}
           </button>
           
           {/* Logout at the bottom */}
