@@ -41,16 +41,20 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
 }
 
 .download-btn:hover {
   background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .download-btn:disabled {
   background: #bdc3c7;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .report-content {
@@ -72,28 +76,33 @@
 
 .stats-section h3 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #2c3e50;
   font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
 .stat-card {
   background: #f8f9fa;
-  padding: 1.25rem;
+  padding: 1.5rem;
   border-radius: 8px;
   border-left: 4px solid #3498db;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h4 {
@@ -105,20 +114,22 @@
 
 .stat-card p {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 600;
   color: #2c3e50;
 }
 
 .top-players-section {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .top-players-section h3 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #2c3e50;
   font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .players-table {
@@ -126,19 +137,22 @@
   border-collapse: collapse;
   margin-top: 1rem;
   font-size: 0.95rem;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .players-table th {
-  background-color: #f8f9fa;
-  padding: 0.75rem 1rem;
+  background-color: #3498db;
+  color: white;
+  padding: 1rem;
   text-align: left;
-  font-weight: 600;
-  color: #2c3e50;
-  border-bottom: 2px solid #eaeaea;
+  font-weight: 500;
 }
 
 .players-table td {
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   border-bottom: 1px solid #eaeaea;
 }
 
@@ -147,7 +161,7 @@
 }
 
 .players-table tr:hover {
-  background-color: #f8f9fa;
+  background-color: #f5f9fd;
 }
 
 .loading, .error {
@@ -181,5 +195,15 @@
 
   .stats-grid {
     grid-template-columns: 1fr 1fr;
+  }
+  
+  .download-options {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .download-btn {
+    width: 48%;
+    justify-content: center;
   }
 }
