@@ -9,6 +9,8 @@
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "chart.js": "^4.4.9",
+    "file-saver": "^2.0.5",
+    "jspdf": "^3.0.1",
     "lucide-react": "^0.503.0",
     "mdb-react-ui-kit": "^8.0.0",
     "react": "^18.2.0",
