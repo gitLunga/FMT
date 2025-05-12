@@ -3,13 +3,12 @@ import './styles/administratorDash.css';
 import api from '../../api';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 
 // Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AdminDashboard = () => {
-  // Define all state variables properly
   const [stats, setStats] = useState({
     totalPlayers: 0,
     totalUsers: 0,
@@ -21,22 +20,31 @@ const AdminDashboard = () => {
   const [notifications, setNotifications] = useState([]);
   const [scoutingData, setScoutingData] = useState(null);
   const [playerData, setPlayerData] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+
+  // Initialize user from localStorage once when component mounts
+  const [currentUser] = useState(() => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const user = JSON.parse(localStorage.getItem('user'));
+        if (!currentUser) {
+          setLoading(false);
+          return;
+        }
         
         // Fetch all stats
         const statsResponse = await api.get('/scout/admin/stats');
         setStats(statsResponse.data);
         
         // Fetch notifications
-        const notificationsResponse = await api.get(`/scout/notifications/user/${user.user_id}`);
+        const notificationsResponse = await api.get(`/scout/notifications/${currentUser.user_id}`);
         setNotifications(notificationsResponse.data);
         
-        // Fetch data for charts - updated endpoints to match backend
+        // Fetch data for charts
         const scoutingResponse = await api.get('/scout/scouting-data');
         setScoutingData(scoutingResponse.data);
         
@@ -51,14 +59,15 @@ const AdminDashboard = () => {
     };
     
     fetchData();
-  }, []);
+  }, [currentUser]); // Add currentUser as dependency
 
   const handleNotificationAction = async (notificationId, action) => {
     try {
-      // const response = await api.put(`/notifications/${notificationId}`, { action });
+      // Update notification status
+      await api.put(`/scout/notifications/${notificationId}`, { action });
       
       // Refresh notifications
-      const updatedResponse = await api.get('/scout/admin/notifications');
+      const updatedResponse = await api.get(`/scout/notifications/${currentUser.user_id}`);
       setNotifications(updatedResponse.data);
     } catch (error) {
       console.error('Error updating notification:', error);
@@ -66,7 +75,7 @@ const AdminDashboard = () => {
     }
   };
 
-  // Chart configuration
+  // Chart configurations remain the same
   const scoutingChartOptions = {
     responsive: true,
     plugins: {
@@ -113,7 +122,6 @@ const AdminDashboard = () => {
             ))}
           </div>
           
-          {/* Integrated Charts */}
           <div className="chart-row">
             {scoutingData && (
               <div className="chart-container">
@@ -187,7 +195,7 @@ const AdminDashboard = () => {
         </div>
         <button
           className="back-button"
-          onClick={() => navigate(-1)} // Go back to previous page
+          onClick={() => navigate(-1)}
         >
           &larr; Back
         </button>
