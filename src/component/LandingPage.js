@@ -82,11 +82,13 @@ const LandingPage = () => {
             <p>123 Academy Street, Football City</p>
             <p>Email: info@footballacademy.com</p>
             <p>Phone: +1 (234) 567-8900</p>
+            <p>Follow us on Instagram: <a href="https://www.instagram.com/soe_footballclub/?igsh=MTljaWF2YjhoeGx4MA%3D%3D#" target="_blank" rel="noopener noreferrer">SOE Football Club</a></p>
+            <p>Like us on Facebook: <a href="https://www.facebook.com/soesocialclub/" target="_blank" rel="noopener noreferrer">SOE Social Club</a></p>
           </div>
         </div>
       </section>
-
       
+
     </div>
   );
 };
